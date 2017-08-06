@@ -1,0 +1,8 @@
+site_name: Ubuntu2Go
+theme: readthedocs
+pages:
+- Home: index.md
+- Software Installation:
+    - Cuda: software/cuda.md
+- Windows:
+    - Wine: windows/wine.md 
