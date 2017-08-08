@@ -4,5 +4,8 @@ pages:
 - Home: index.md
 - Software Installation:
     - Cuda: software/cuda.md
+    - Tensorflow: software/tensorflow.md
+- Linux Command:
+    - free: command/free.md
 - Windows:
     - Wine: windows/wine.md 
