@@ -1,0 +1,84 @@
+## Download tensorflow source code
+current_dir=$(pwd)
+if [ ! -d ./"tensorflow" ]; then
+        echo "Clone source code from github"
+        git clone https://github.com/tensorflow/tensorflow
+fi
+cd "tensorflow"
+git  checkout v1.3.1
+
+
+## All use default values and set jemalloc to N
+
+./configure 
+bazel build -c opt //tensorflow:libtensorflow_cc.so
+
+## Installation
+prefix="$HOME"/"3rdparty/tensorflow"
+mkdir -p "$prefix"
+mkdir -p "$prefix"/"lib"
+mkdir -p "$prefix"/"include"
+mkdir -p "$prefix"/"include"/"third_party"
+
+cp -f  bazel-bin/tensorflow/libtensorflow_cc.so "$prefix"/"lib"
+cp -rf tensorflow "$prefix"/"include"
+cp -rf bazel-genfiles/tensorflow "$prefix"/"include"
+cp -rf bazel-tensorflow/external/protobuf/src/google "$prefix"/"include"
+cp -rf third_party/eigen3 "$prefix"/"include/third_party"
+
+
+
+
+#if [ ! -f ./"$file_name" ]; then
+#	wget_out=$(wget -O "$file_name" "$url")
+#	if [ $? -ne 0 ]; then
+#		echo "Download Bazel failed"
+#		exit 1;
+#	fi
+#fi
+
+## Check sha256 sum 
+#sha256sum_=$(sha256sum "$file_name" | cut -c -64) 
+#if [ "$_sha256sum" != "$sha256sum_" ]; then
+#	echo "Bazel dowloaded file sha256 sum dose not match"
+##	exit 1
+#fi
+#if [ -f ./"$directory_name" ]; then
+#	rm -rf "$directory_name"
+#	echo "remove old directories"
+#fi
+
+
+#unzip "$file_name" -d "$directory_name"
+
+## start to run make
+#cd "$directory_name"
+#install_dir="$HOME"/"3rdparty"/"bazel"
+#mkdir -p "$install_dir"
+
+#### change one spicific line to aviodi GLIBCXX_3.4.18 not found error
+#sed -i  '165s/False/True/'  "$current_dir"/"$file_name"/src/main/java/com/google/devtools/build/lib/rules/SkylarkRuleImplementationFunctions.java
+#./compile.sh
+
+#cp bazel-output/bazel "$install_dir"
+
+## prepaire python enviroment
+
+#cd "$current_dir"
+#touch "python27.env"
+
+#echo "export LD_LIBRARY_PATH=""HOME"/3rdparty/python27/lib:$LD_LIBRARY_PATH >> "python27.env"
+#echo -e "\n"
+#echo "export LD_LIBRARY_PATH=""HOME"/3rdparty/python27/lib64:$LD_LIBRARY_PATH >> "python27.env"
+#echo -e "\n"
+#echo "export PATH=""HOME"/3rdparty/python27/bin:$PATH >> "python27.env"
+#echo -e "\n"
+#echo "export C_INCLUDE_PATH=""HOME"/3rdparty/python27/include:$C_INCLUDE_PATH >> "python27.env"
+#echo -e "\n"
+#echo "export CPLUS_INCLUDE_PATH=""HOME"/3rdparty/python27/include:$CPLUS_INCLUDE_PATH >> "python27.env"
+
+
+#cp "python27.env" "$HOME"/".python27.env"
+
+
+ 

@@ -1,4 +1,4 @@
-#Compile Tensorflow C++ library for bazel-independent use
+
 
 Follow the [Installing Tensorflow from Source](https://www.tensorflow.org/install/install_sources) instructions to install all the dependens. Clone the source code from [Github](https://github.com/tensorflow/tensorflow), and ckeckout to the specific version you want. Then follow the instructions below 
 
@@ -33,3 +33,20 @@ To use libtensorflow_cc.so, you need to have the right version Eigen and protobu
 As for the protobuf, you can download the right pre-compiled version, or download the source code and compile it yourself, see [Compile protobuf from source](https://github.com/google/protobuf/blob/master/src/README.md) for more information.
 
 
+## Jemalloc
+
+The main benefit is scalability in multi-processor and multi-threaded systems achieved, in part, by using multiple arenas (the chunks of raw memory from which allocations are made). See [jemalloc](http://jemalloc.net/) for more details.
+
+## XLA
+
+XLA currently supports JIT compilation on x86-64 and NVIDIA GPUs; and AOT compilation for x86-64 and ARM. See [tensorflow/performance](https://www.tensorflow.org/performance/xla/) for more details. 
+
+## JIT
+
+[tensorflow/jit](https://www.tensorflow.org/performance/xla/jit)
+
+## CUDA computing power
+See [Nvidia](https://developer.nvidia.com/cuda-gpus) for your GPU computing power.
+
+## Eable instristic instructions support
+bazle build -c opt --copt=-msse4.1 --copt=-msse4.2 --copt=-mavx
