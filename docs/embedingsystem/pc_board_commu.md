@@ -147,9 +147,21 @@ route add default gw xxx.xxx.xxx.xxx
 其中 eth0对应的是ip地址，选择与服务端机器同一个网段的没人用的一个ip； netmask 位掩码，通常位255.255.255.0；
 gw 位网关， 通常掩码和网关可以在服务端运行 ifconfig -a，从输出信息中找得。
 
+2. 从服务端向客户端传送文件
 
+```
+tftp -g -r from.server.to.board xxx.xxx.xxx.xxx
 
+```
+frome.serer.to.board 是要传送的文件， xxx.xxx.xxx.xxx是服务端的ip。
 
+3. 从客户端像服务端传送文件
+
+```
+tftp -p -l from.board.to.server xxx.xxx.xxx.xxx
+
+```
+其中from.board.to.server 是需要传送的文件，xxx.xxx.xxx.xxx是服务端的ip
 
 
 ##通过nfs向版子发送文件
@@ -182,6 +194,13 @@ sudo /etc/init.d/nfs-kernel-server restart
 
 ### 配置客户端
 
+0. 查看客户端是否支持nfs
+
+```
+cat /proc/filesystems
+
+```
+如果“nodev	nfs” 在里边则说明内核支持nfs
 1. 配置网络环境
 
 
@@ -191,7 +210,15 @@ sudo /etc/init.d/nfs-kernel-server restart
 sudo mount -t nfs xxx.xxx.xxx.xxx:/home/name/shared/directory /mnt 
 
 ```
-其中 xxx.xxx.xxx.xxx 是nfs服务端的ip， /home/name/shared/directory是服务端共享的文件夹， /mnt 是客户端将挂在的地址
+
+其中 xxx.xxx.xxx.xxx 是nfs服务端的ip， /home/name/shared/directory是服务端共享的文件夹， /mnt 是客户端将挂在的地址。
+我在海思的开发版上用上面的命令mount的时候出现 Operation not soupport的错误，我将客户端的挂载路径换成
+“/mnt/nfs” 之后就挂载成功了。一下是相关的命令：
+
+```
+mount -t nfs -o nolock 192.168.50.247:/home/hisi/Hi3559AV100ES_SDK_V2.0.2.0 /mnt/nfs
+
+```
 
 3. 如果挂在不成功，安装 nfs-common
 
@@ -199,12 +226,17 @@ sudo mount -t nfs xxx.xxx.xxx.xxx:/home/name/shared/directory /mnt
 sudo apt-get install nfs-common
 
 ```
+4. 设置机器每次启动自动挂载。 vi /etc/fstab, 在文件末尾加上
 
+```
+xxx.xxx.xxx.xxx:/home/name/shared/directory /mnt/nfs nfs default 0 0
 
+```
+保存并退出
 
 ##telnet 控制远程机器
 telnet 
-### telnet 服务端配置（服务端指的是需要被远程控制的机器，我们教程中指的是开发板）
+### telnet 服务端配置（服务端指的是需要被远程控制的机器，我们教程中指是开发板）
 1. 在服务端上的/etc/securetty 添加以下代码 （如文件不存在，重新创建）
 
 ```
