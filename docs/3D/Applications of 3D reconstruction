@@ -1,0 +1,35 @@
+Applications of 3D reconstruction
+
+* Face reenactment
+* Face image editing
+* Apply make up
+* Face animation
+* Facial expression transfer
+* Face replacement
+
+
+
+
+https://www.scratchapixel.com/index.php?#_=_
+
+https://www.ntu.edu.sg/home/ehchua/programming/opengl/CG_BasicsTheory.html
+
+Rendering
+
+* Albedo: The characteristic color of an object is called albedo in computer graphics.
+
+Simulating the appearance of an object requires to answer one question only: how much
+light does an object reflect back to the eye ( or any other direction for that matter 
+which is particularly useful when indirect lighting in computed), over the total amount
+it receives.
+
+Shader: if the object is made of wood, if this wood has this given color and this given 
+        roughness, if some quality of light impinges upon this object from the direction wi,
+        how much of that light would be reflected by this object back in the environment in 
+        the direction wv?
+
+
+From 3D objects to 2D image:
+1. Computing the Pixel Coordinates of a 3D Point
+2. Computing the appearance of the 3D objects in image
+3. Determine which points are visible
